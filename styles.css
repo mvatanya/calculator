@@ -28,12 +28,20 @@ body {
   /* display: inline-block; */
   display: flex;
   justify-content: space-between;
+  margin: 0 20px 20px 20px;
+  text-align: center;  
 }
 .numbers {
   display: flex;
+  margin-bottom: 20px;
 }
 .left {
-  flex: 3
+  flex: 3;
+  justify-content: space-between;
+  margin-right: -4px
+}
+.left div {
+  margin-right: 8px
 }
 .numbers div {
   border: 1px solid black;
@@ -42,12 +50,18 @@ body {
   padding: 10px;
 }
 .equals {
-  flex: 1
+  flex: 1;
 }
 .equals div {
-  width: 85px;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  width: 102px;
   border: 1px solid black;
   height: 100%;
+}
+#last-row {
+  margin-bottom: 0
 }
 
 
