@@ -1,8 +1,8 @@
 let operations = {
-  '+': function(a,b) {return a+b},
-  '-': function(a,b) {return a-b},
+  '÷': function(a,b) {return a/b},
   '×': function(a,b) {return a*b},
-  '÷': function(a,b) {return a/b}
+  '-': function(a,b) {return a-b},
+  '+': function(a,b) {return parseFloat(a)+parseFloat(b)}
 }
 let operators = Object.keys(operations)
 let input = document.getElementById('input');
@@ -22,6 +22,10 @@ numbersDiv.forEach(n => {
     //case 2 if showResult is true and user click on operators, keep adding new input to display
 
     //case 3 if showResult is true and user click on numbers, clear current display and add new number to display
+    if (showResult){
+      input.innerText = e.target.innerText
+      showResult = false
+    }
   })
 })
 
@@ -57,16 +61,25 @@ clearDiv.addEventListener('click', function(){
 let resultDiv = document.getElementById('equals')
 resultDiv.addEventListener('click', function(){
   let currentText = input.innerText
+  let currentResults;
+  let currentPositionOperator;
   //Check if last text is one of the operations, remove it
   if (operators.indexOf(currentText[currentText.length-1])!==-1){
-    console.log('in here', operators.indexOf(currentText[currentText.length-1]))
     let newString = input.innerText.slice(0, input.innerText.length-1)
     currentText = newString
   }
   //Seperate numbers and operations into different arrays
-  console.log(currentText)
   let numbersArray = currentText.split(/\+|\-|\×|\÷/g);
   let operatorsArray = currentText.replace(/[0-9]|\./g, "").split("");
-  console.log(numbersArray)
-  console.log(operatorsArray)
+  //start operations in order from operators (since x and ÷ should start first)
+  for (let i of operators){
+    while(operatorsArray.indexOf(i) !== -1){
+      currentPositionOperator = operatorsArray.indexOf(i);
+      currentResult = operations[i](numbersArray[currentPositionOperator],numbersArray[currentPositionOperator+1]);
+      numbersArray.splice(currentPositionOperator, 2, currentResult)
+      operatorsArray.splice(currentPositionOperator,1)
+    }
+  }
+  input.innerText = numbersArray[0]
+  showResult = true;
 })
