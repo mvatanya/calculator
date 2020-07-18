@@ -14,13 +14,17 @@ let lastChar
 //To handle when click numbers
 numbersDiv.forEach(n => {
   n.addEventListener('click', function(e){
+    console.log('showResult', showResult)
     //case 1 if showResult is false, keep adding number on input
     if(!showResult){
       input.innerText += e.target.innerText
     }
 
     //case 2 if showResult is true and user click on operators, keep adding new input to display
-
+    if(showResult && operators.indexOf(input.innerText[input.innerText.length-1]) !== -1 ){
+      input.innerText += e.target.innerText
+      showResult = false
+    }
     //case 3 if showResult is true and user click on numbers, clear current display and add new number to display
     if (showResult){
       input.innerText = e.target.innerText
